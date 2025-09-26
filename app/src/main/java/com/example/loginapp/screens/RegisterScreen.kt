@@ -42,6 +42,7 @@ fun RegisterScreen(){
     var apellido by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
@@ -116,8 +117,8 @@ fun RegisterScreen(){
 
 
                 OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
+                    value = confirmPassword,
+                    onValueChange = { confirmPassword = it },
                     label = { Text("Confirm Password") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Password,
