@@ -1,16 +1,19 @@
 package com.example.loginapp.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -23,79 +26,110 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.loginapp.ui.theme.LoginAppTheme
+import com.example.loginapp.ui.theme.RegisterScreenRoute
+
 
 @Composable
 fun LoginScreen(navController : NavController){
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var passwordVisible by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(top = 30.dp)
             .clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp))
-            .background(Color.DarkGray),
+            .clip(RoundedCornerShape(bottomStart = 30.dp))
+            .background(Color.White),
         //verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+        //horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // ICONO DE LOGO
-        Icon(
-            imageVector = Icons.Default.Person,
-            contentDescription = "LOGO",
-            modifier = Modifier
-                .padding(top = 40.dp)
-                .size(80.dp)
-        )
-
-        //LOGIN
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 50.dp)
-                .clip(RoundedCornerShape(topStart = 40.dp, bottomStart = 40.dp, bottomEnd = 40.dp))
-                .background(Color.White),
-            verticalArrangement = Arrangement.Center,
+                .fillMaxWidth()
+                .background(Color.DarkGray),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Login",
-                style = MaterialTheme.typography.headlineMedium
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = "LOGO",
+                modifier = Modifier
+                    .padding(top = 100.dp, bottom = 100.dp)
+                    .size(80.dp)
             )
 
+            //LOGIN
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .shadow(
-                        elevation = 8.dp, // qué tan fuerte es la sombra
-                        shape = RoundedCornerShape(40.dp),
-                        clip = false // false = que la sombra no se recorte
-                    )
-                    .clip(RoundedCornerShape(40.dp))
+                    .clip(RoundedCornerShape(topStart = 60.dp))
                     .background(Color.White),
-
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "Email",
-                    style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    text = "Login",
+                    style = MaterialTheme.typography.headlineMedium
                 )
 
                 OutlinedTextField(
                     value = email,
-                    onValueChange = { email = it },
-                    placeholder = { Text("example@email.com") },
+                    onValueChange = {email = it},
+                    label = {Text("Correo")},
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Email,
+                        imeAction = ImeAction.Next
+                    ),
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
 
+                )
+
+                OutlinedTextField(
+                    value = password,
+                    onValueChange = { password = it },
+                    label = { Text("Contraseña") },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Password,
+                        imeAction = ImeAction.Done
+                    ),
+                    visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    singleLine = true
+                )
+
+                Button(
+                    modifier = Modifier
+                        .fillMaxWidth(0.7f)
+                        .padding(top = 20.dp),
+                    onClick = {},
+                    colors = ButtonDefaults.buttonColors(Color.Black)
+                ) {
+                    Text("Login", color = Color.White)
+                }
+
+
+                Text(
+                    text = "don't have any account? Sign Up",
+                    modifier = Modifier
+                        .padding(top = 100.dp)
+                        .clickable{
+                            navController.navigate("/register")
+                        }
+                )
+
+            }
         }
+
     }
 }
 

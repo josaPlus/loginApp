@@ -15,7 +15,10 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.loginapp.screens.LoginScreen
+import com.example.loginapp.screens.RegisterScreen
 import com.example.loginapp.ui.theme.LoginAppTheme
+import com.example.loginapp.ui.theme.LoginScreenRoute
+import com.example.loginapp.ui.theme.RegisterScreenRoute
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,8 +34,11 @@ class MainActivity : ComponentActivity() {
                         navController = navController,
                         startDestination = "/login"
                     ) {
-                        composable(route = "/login"){
+                        composable("/login"){
                             LoginScreen(navController)
+                        }
+                        composable("/register") {
+                            RegisterScreen()
                         }
                     }
                 }
